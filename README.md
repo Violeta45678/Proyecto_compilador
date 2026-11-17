@@ -5,9 +5,9 @@
 Analizador léxico (scanner) en Python que lee un archivo de texto con código fuente, reconoce los tokens del lenguaje asignado y reporta los errores léxicos con su línea y columna. Es una implementación propia basada en expresiones regulares del módulo nativo `re`, sin generadores automáticos ni librerías de terceros.
 
 **Integrantes:**
-- <Violeta Sofia Martinez Puente>
-- <Dalila Astrid Murcia Medina>
-- <Marelin Valeriana Romualdo Leonor>
+- Violeta Sofia Martinez Puente
+- Dalila Astrid Murcia Medina
+- Marelin Valeriana Romualdo Leonor
 
 Universidad de Sonsonate, Ingeniería en Sistemas Computacionales. Curso: Compiladores.
 
