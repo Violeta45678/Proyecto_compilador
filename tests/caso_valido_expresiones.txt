@@ -1,0 +1,9 @@
+// Precedencia, asociatividad y paréntesis
+int a = 2, b = 3, c;
+float r;
+c = a + b * 4;              // 2 + (3 * 4)
+c = (a + b) * 4;            // (2 + 3) * 4
+c = a - b - 1;              // (a - b) - 1
+a = b = c = 0;              // a = (b = (c = 0))
+r = -a + -(b * 2.5) / 1.0;
+c = a < b == b > a;         // (a < b) == (b > a)

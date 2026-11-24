@@ -1,0 +1,19 @@
+/* Estructuras de control anidadas */
+void main() {
+    int i = 0, total = 0;
+    while (i < 10) {
+        if (i == 5)
+            total = total + 100;
+        else if (i > 5) {
+            total = total - 1;
+        } else
+            total = total + i;
+        i = i + 1;
+    }
+    for (int j = 10; j >= 0; j = j - 2) {
+        for (;;) ;
+    }
+    { int bloqueInterno; }
+    ;
+    return;
+}
