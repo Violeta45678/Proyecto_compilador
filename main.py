@@ -1,14 +1,21 @@
 """
 MÓDULO: main.py
-PROYECTO FINAL: COMPILADORES - FASES 1 Y 2
-Punto de entrada. Uso:
-    python main.py <ruta_del_archivo>            # Fase 1 (errores léxicos) + Fase 2
-    python main.py <ruta_del_archivo> --tokens   # además muestra todos los tokens (Fase 1 completa)
+PROYECTO FINAL: COMPILADORES - FASES 1, 2 Y 3
+Punto de entrada. Ejecuta en orden: análisis léxico, sintáctico y semántico.
+
+Uso:
+    python main.py <ruta_del_archivo> [--tokens] [--ast] [--advertencias]
+
+    --tokens        muestra todos los tokens (Fase 1 completa)
+    --ast           imprime el AST decorado con el tipo calculado de cada expresión
+    --advertencias  activa las advertencias [ADVERTENCIA] (variables sin usar, usadas
+                    antes de recibir un valor y división entre la constante 0)
 """
 
 import sys
 from lexer import Lexer
 from sintactico import Parser
+from semantico import AnalizadorSemantico, imprimir_ast_decorado
 
 
 def mostrar_fase1(tokens, errores_lex, con_tokens: bool):
@@ -35,10 +42,13 @@ def mostrar_fase1(tokens, errores_lex, con_tokens: bool):
 
 
 def main() -> int:
-    args = [a for a in sys.argv[1:] if a != "--tokens"]
+    opciones = {"--tokens", "--ast", "--advertencias"}
+    args = [a for a in sys.argv[1:] if a not in opciones]
     con_tokens = "--tokens" in sys.argv[1:]
+    con_ast = "--ast" in sys.argv[1:]
+    con_advertencias = "--advertencias" in sys.argv[1:]
     if len(args) != 1:
-        print("Uso: python main.py <ruta_del_archivo> [--tokens]")
+        print("Uso: python main.py <ruta_del_archivo> [--tokens] [--ast] [--advertencias]")
         return 1
 
     if hasattr(sys.stdout, "reconfigure"):
@@ -60,24 +70,23 @@ def main() -> int:
     mostrar_fase1(tokens, errores_lex, con_tokens)
 
     # Fase 2: análisis sintáctico
-    ast, errores = Parser(tokens).analizar()
-    for e in errores:
+    ast, errores_sint = Parser(tokens).analizar()
+    for e in errores_sint:
         print(f"[ERROR SINTÁCTICO] {e.mensaje} en "
               f"Posición: [Línea {e.linea}, Col {e.columna}]")
 
-    if errores:
-        print(f"Errores sintácticos: {len(errores)}")
+    # Fase 3: solo si el AST está completo (sin errores léxicos ni sintácticos)
+    if errores_lex or errores_sint:
+        print("Análisis semántico omitido: corrija primero los errores anteriores.")
         return 1
 
-    print("Análisis sintáctico completado sin errores.")
-    ast.imprimir()
-    print(f"\nErrores léxicos: {len(errores_lex)}")
-    print("Errores sintácticos: 0")
-    if errores_lex:
-        print("Resultado: COMPILACIÓN CON ERRORES LÉXICOS")
-        return 1
-    print("Resultado: COMPILACIÓN EXITOSA")
-    return 0
+    analizador = AnalizadorSemantico(advertencias=con_advertencias)
+    analizador.analizar(ast)
+    analizador.imprimir_reporte()
+    if con_ast:
+        print("\n=== AST DECORADO ===")
+        imprimir_ast_decorado(ast)
+    return 1 if analizador.errores else 0
 
 
 if __name__ == "__main__":

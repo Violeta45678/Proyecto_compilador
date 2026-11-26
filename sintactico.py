@@ -159,7 +159,9 @@ class Parser:
                 raise self.error_esperado("un tipo de dato")
             tipo = self.advance()
             nombre = self.expect("ID", "un identificador")
-            lista.append(ASTNode("Parametro", nombre.value, [], tipo.line, tipo.column,
+            # La posición es la del nombre (no la del tipo) para que el analizador
+            # semántico pueda señalar el parámetro exacto (p. ej. un parámetro repetido).
+            lista.append(ASTNode("Parametro", nombre.value, [], nombre.line, nombre.column,
                                  detalle=tipo.value))
             if self.check("DELIM_COMMA"):
                 self.advance()

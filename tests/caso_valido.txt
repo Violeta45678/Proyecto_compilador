@@ -1,36 +1,47 @@
-/* Programa de prueba válido
-   Calcula factorial y suma de pares */
+/* Fase 3: programa semánticamente correcto
+   Variables globales y locales, ocultamiento, funciones con parámetros,
+   recursión, promoción int -> float y concatenación de strings */
 
 int limite = 10;
-float tasa = 0.5, total;
-string mensaje = "Resultado: ";
+float tasa = 0.15;
+string saludo = "Hola, " + "mundo";
 
 int factorial(int n) {
     if (n <= 1) {
         return 1;
+    }
+    return n * factorial(n - 1);          // recursión
+}
+
+float aplicarTasa(float monto, int veces) {
+    float resultado = monto;              // float <- float
+    for (int i = 0; i < veces; i = i + 1) {
+        resultado = resultado + resultado * tasa;
+    }
+    return resultado;
+}
+
+string unir(string a, string b) {
+    return a + " " + b;                   // concatenación
+}
+
+int main() {
+    int limite = 3;                       // oculta a la global (shadowing)
+    float precio = 25;                    // promoción int -> float
+    float total = precio * limite;        // float * int -> float
+    string mensaje = unir(saludo, "GestiónYa");
+    if (mensaje == saludo) {              // string == string -> int
+        int limite = 99;                  // otro nivel de ocultamiento
+        total = total + limite;
     } else {
-        return n * factorial(n - 1);
+        total = total - 1;
     }
-}
-
-int sumaPares(int max) {
-    int suma = 0;
-    int i;
-    for (i = 0; i <= max; i = i + 1) {
-        if (i - (i / 2) * 2 == 0)
-            suma = suma + i;
+    while (limite > 0) {
+        limite = limite - 1;
     }
-    return suma;
-}
-
-void main() {
-    int x = factorial(5);   // 120
-    int y = sumaPares(limite);
-    total = (x + y) * tasa - -1;
-    while (x != 0) {
-        x = x - 1;
+    total = aplicarTasa(total, factorial(3));
+    if (total > 50) {
+        imprimir(mensaje, total, limite);
     }
-    for (int k = 0; k < 3; k = k + 1) ;
-    imprimir(mensaje, total);
-    return;
+    return 0;
 }

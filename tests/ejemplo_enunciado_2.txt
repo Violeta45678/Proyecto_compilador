@@ -1,0 +1,19 @@
+float tasa = 0.15;
+
+float calcularImpuesto(float monto) {
+    return monto * tasa;
+}
+
+int main() {
+    int cantidad = 3;
+    float precio = 25;              // int -> float: promoción permitida
+    float total = precio * cantidad;
+    string mensaje = "Total: " + "con impuesto";
+    if (total > 50) {
+        float descuento = total * 0.1;
+        total = total - descuento;
+    }
+    total = total + calcularImpuesto(total);
+    imprimir(mensaje, total);
+    return 0;
+}

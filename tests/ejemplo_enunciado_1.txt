@@ -1,0 +1,25 @@
+int contador = 0;
+float precio = 9.99;
+string nombre = "Ana";
+
+int duplicar(int n) {
+    return n * 2;
+}
+
+void saludar() {
+    return 1;
+}
+
+int main() {
+    int contador = 5;
+    float total;
+    int contador = 10;
+    total = precio * cantidad;
+    contador = nombre;
+    nombre = nombre - "x";
+    duplicar(1, 2);
+    total = saludar() + 1;
+    if (nombre) { contador = 1; }
+    edad(3);
+    return;
+}

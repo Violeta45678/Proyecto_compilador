@@ -1,14 +1,37 @@
-int a = 1
-int b = 2;
-int c = (a + b;
-c = * 3;
-else { c = 1; }
-if (a > b {
-    c = a;
+/* Fase 3: sintácticamente correcto, con al menos un error de cada una
+   de las 6 verificaciones obligatorias. Todos se reportan en una ejecución. */
+
+int contador = 0;
+string nombre = "Ana";
+
+int duplicar(int n) {
+    return n * 2;
 }
-int f(int x, ) {
+
+void saludar() {
+    return 1;                      // 6. return con valor en función void
+}
+
+int obtener() {
+    return;                        // 6. return sin valor en función que no es void
+}
+
+int sumar(int a, int a) {          // 2. parámetro declarado dos veces
+    return a;
+}
+
+int main() {
+    int total = 1;
+    int total = 2;                 // 2. variable declarada dos veces en el mismo ámbito
+    resultado = 5;                 // 1. variable no declarada
+    contador = nombre;             // 3. asignación con tipos incompatibles
+    int entero = 2.5;              // 3. inicialización con pérdida de precisión
+    nombre = nombre - "x";         // 4. operación con operandos incompatibles
+    duplicar(1, 2);                // 5. cantidad incorrecta de argumentos
+    edad(3);                       // 1. función no declarada
+    return 0;
+}
+
+int duplicar(int x) {              // 2. función declarada dos veces
     return x;
 }
-a + 1 = 5;
-while (a < 3) {
-    a = a + 1;
